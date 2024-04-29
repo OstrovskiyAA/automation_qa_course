@@ -9,7 +9,7 @@
 #     time.sleep(2)
 import time
 from conftest import driver
-from pages.elements_page import TextBoxPage
+from pages.elements_page import TextBoxPage, CheckBoxPage
 
 
 class TestTextBox:
@@ -29,5 +29,14 @@ class TestTextBox:
         # output_data = test_box_page.check_filled_form()
         # assert input_data == output_data
         time.sleep(5)
-
-
+class TestCheckbox:
+    def test_check_box(self, driver):
+        check_box_page = CheckBoxPage(driver, 'https://demoqa.com/checkbox')
+        check_box_page.open()
+        check_box_page.open_full_list()
+        check_box_page.click_random_checkbox()
+        input_checkbox = check_box_page.get_checked_checkboxes()
+        output_result = check_box_page.get_output_result()
+        print(input_checkbox)
+        print(output_result)
+        assert input_checkbox == output_result, 'check box did not match'
