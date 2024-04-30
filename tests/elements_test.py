@@ -9,7 +9,7 @@
 #     time.sleep(2)
 import time
 from conftest import driver
-from pages.elements_page import TextBoxPage, CheckBoxPage
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage
 
 
 class TestTextBox:
@@ -40,3 +40,24 @@ class TestCheckbox:
         print(input_checkbox)
         print(output_result)
         assert input_checkbox == output_result, 'check box did not match'
+class TestRadioButton:
+    def test_radio_button(self, driver):
+        radio_button_page = RadioButtonPage(driver, 'https://demoqa.com/radio-button')
+        radio_button_page.open()
+        # radio_button_page.click_order_radio_button() - для последовательного вызова и проверки тут
+        # radio_button_page.click_random_radio_button() - для рандомного нажатия
+        # a, b = radio_button_page.click_order_radio_button2() - мое решение №1
+        # assert a == b, 'radio-buttons did not match'
+        # time.sleep(2)
+        radio_button_page.click_on_the_radio_button('yes')
+        output_yes = radio_button_page.get_output_result()
+        radio_button_page.click_on_the_radio_button('impressive')
+        output_impressive = radio_button_page.get_output_result()
+        radio_button_page.click_on_the_radio_button('no')
+        output_no = radio_button_page.get_output_result()
+        assert output_yes == 'Yes', 'the radio button "YES" did not match'
+        assert output_impressive == 'Impressive', 'the radio button "IMPRESSIVE" did not match'
+        assert output_no == 'No', 'the radio button "NO" did not match'
+
+
+

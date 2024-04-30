@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
-
+import time
 from generation.generator import generated_person
-from locators.elements_page_locators import TextBoxPageLocators, CheckboxPageLocators
+from locators.elements_page_locators import TextBoxPageLocators, CheckboxPageLocators, RadioButtonPageLocators
 from pages.base_page import BasePage
 import random
 
@@ -60,3 +60,52 @@ class CheckBoxPage(BasePage):
 
     # data11 = str(data11).replace(' ', '').replace('doc', '').replace('.', '').lower()
     # data22 = str(data22).replace(' ', '').lower()
+class RadioButtonPage(BasePage):
+    locators = RadioButtonPageLocators()
+    # def click_random_radio_button(self): - для рандомного вызова
+    #     item_list = self.elements_are_present(self.locators.INPUT_RADIO_BUTTON)
+    #     count = 0
+    #     while count == 0:
+    #         item = item_list[random.randint(0, 1)]
+    #         self.go_to_element(item)
+    #         item.click()
+    #         count -=1
+    # =======================================================================================
+    # def click_order_radio_button(self): - для последовательного вызова и проверки тут
+    #     item_list = self.elements_are_present(self.locators.INPUT_RADIO_BUTTON)
+    #     for i in range(len(item_list)):
+    #         self.go_to_element(item_list[i])
+    #         item_list[i].click()
+    #         input_item = item_list[i]
+    #         output_item = self.element_is_present(self.locators.OUTPUT_RADIO_BUTTON)
+    #         if output_item.text != input_item.text:
+    #             print("Ошибочные значения")
+    #             break
+    #         time.sleep(2)
+    #         print(f'{output_item.text} = {input_item.text}')
+    # =========================================================================================
+    # def click_order_radio_button2(self): - мое решение №1
+    #     item_list = self.elements_are_present(self.locators.INPUT_RADIO_BUTTON)
+    #     a=[]
+    #     b=[]
+    #     for i in range(len(item_list)):
+    #         self.go_to_element(item_list[i])
+    #         item_list[i].click()
+    #         input_item = item_list[i]
+    #         output_item = self.element_is_present(self.locators.OUTPUT_RADIO_BUTTON)
+    #         a.append(input_item.text)
+    #         b.append(output_item.text)
+    #         if output_item.text != input_item.text:
+    #             print("Ошибочные значения")
+    #             break
+    #         time.sleep(2)
+    #         print(f'{output_item.text} = {input_item.text}')
+    #     return a, b
+    # ==================================================================================
+    def click_on_the_radio_button(self,choice):
+        choices = {'yes':self.locators.YES_RADIOBUTTON,
+                'impressive':self.locators.IMPRESSIVE_RADIOBUTTON,
+                 'no':self.locators.NO_RADIOBUTTON}
+        self.element_is_visible(choices[choice]).click()
+    def get_output_result(self):
+        return self.element_is_present(self.locators.OUTPUT_RESULT).text
