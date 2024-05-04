@@ -7,6 +7,7 @@
 #     page = BasePage(driver, 'https://www.google.ru')
 #     page.open()
 #     time.sleep(2)
+import random
 import time
 from conftest import driver
 from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage
@@ -62,7 +63,20 @@ class TestWebTable:
     def test_web_table_add_person(self, driver):
         web_table_page = WebTablePage(driver, 'https://demoqa.com/webtables')
         web_table_page.open()
-        web_table_page.add_new_person()
-        time.sleep(5)
+        new_person = web_table_page.add_new_person()
+        table_result = web_table_page.check_new_added_person()
+        print(new_person)
+        print(table_result)
+        assert new_person in table_result
+
+    def test_web_table_search_person(self, driver):
+        web_table_page = WebTablePage(driver, 'https://demoqa.com/webtables')
+        web_table_page.open()
+        key_word = web_table_page.add_new_person()[random.randint(0,5)]
+        web_table_page.search_some_person(key_word)
+        table_result = web_table_page.check_search_person()
+        print(key_word)
+        print(table_result)
+        assert key_word in table_result, "the person was not found in the table"
 
 
